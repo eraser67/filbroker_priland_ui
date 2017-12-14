@@ -1,16 +1,43 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { HomeLanding } from './home/home.landing';
+import { AccountLogin } from './account/account.login';
+
+import { AccountService } from './account/account.service';
+
+const routes: Routes = [
+  {
+      path: 'account/login',
+      component: AccountLogin
+  },
+  {
+      path: '',
+      component: HomeLanding
+  },
+];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeLanding,
+    AccountLogin
   ],
   imports: [
+    RouterModule.forRoot(routes),
+    FormsModule,
+    HttpModule,
     BrowserModule
   ],
-  providers: [],
+  exports: [
+    RouterModule
+  ],
+  providers: [AccountService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
