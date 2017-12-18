@@ -16,6 +16,7 @@ import * as wjGrid from 'wijmo/wijmo.angular2.grid';
 import { AppComponent } from './app.component';
 import { HomeLanding } from './home/home.landing';
 import { AccountLogin } from './account/account.login';
+import { MenuIndex } from './menu/menu.index';
 import { ProjectList } from './project/project.list';
 
 // My Services
@@ -23,17 +24,21 @@ import { AccountService } from './account/account.service';
 
 const routes: Routes = [
   {
+    path: '',
+    component: HomeLanding
+  },
+  {
       path: 'account/login',
       component: AccountLogin
   },
   {
-      path: 'project',
-      component: ProjectList
+    path: 'menu',
+    component: MenuIndex
   },
   {
-      path: '',
-      component: HomeLanding
-  },
+      path: 'project',
+      component: ProjectList
+  }
 ];
 
 @NgModule({
@@ -41,6 +46,7 @@ const routes: Routes = [
     AppComponent,
     HomeLanding,
     AccountLogin,
+    MenuIndex,
     ProjectList,
     wjGrid.WjFlexGrid
   ],
