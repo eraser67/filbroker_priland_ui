@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
+
 
 import { AppComponent } from './app.component';
 import { HomeLanding } from './home/home.landing';
@@ -29,9 +32,11 @@ const routes: Routes = [
   ],
   imports: [
     RouterModule.forRoot(routes),
+    ToastModule.forRoot(),
     FormsModule,
     HttpModule,
-    BrowserModule
+    BrowserModule,
+    BrowserAnimationsModule
   ],
   exports: [
     RouterModule
