@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 import { ModelProject } from '../model/model.project';
 
 @Component({
+    
   templateUrl: './project.list.html'
 })
 

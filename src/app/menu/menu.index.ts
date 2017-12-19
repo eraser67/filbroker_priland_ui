@@ -2,6 +2,7 @@
 import { Component } from '@angular/core';
 
 @Component({
+  selector: 'menu-root',
   templateUrl: './menu.index.html'
 })
 
