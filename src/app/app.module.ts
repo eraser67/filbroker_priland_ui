@@ -10,7 +10,8 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 // Wijmo
-import * as wjGrid from 'wijmo/wijmo.angular2.grid';
+import { WjGridModule } from 'wijmo/wijmo.angular2.grid';
+import { WjInputModule } from 'wijmo/wijmo.angular2.input';
 
 // My Components
 import { AppComponent } from './app.component';
@@ -38,6 +39,7 @@ import { ReportsIndex } from './reports/reports.index';
 
 // My Services
 import { AccountService } from './account/account.service';
+import { ProjectService } from './project/project.service';
 
 const routes: Routes = [
   { path: '', component: HomeLanding },
@@ -78,8 +80,7 @@ const routes: Routes = [
     UnitList, UnitDetail,
     UserList, UserDetail,
     SettingsIndex,
-    ReportsIndex,
-    wjGrid.WjFlexGrid
+    ReportsIndex
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -87,12 +88,17 @@ const routes: Routes = [
     FormsModule,
     HttpModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    WjGridModule,
+    WjInputModule
   ],
   exports: [
     RouterModule
   ],
-  providers: [AccountService],
+  providers: [
+    AccountService,
+    ProjectService
+  ],
   bootstrap: [AppComponent]
 })
 
