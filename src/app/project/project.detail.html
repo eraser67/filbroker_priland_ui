@@ -6,7 +6,7 @@
 
 <div class="content-wrapper">
     <div class="container-fluid">
-        
+
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="/menu">Menu</a>
@@ -17,12 +17,74 @@
             <li class="breadcrumb-item active">{{title}}</li>
         </ol>
 
-        <div class="row">
-            <div class="col-12">
-                <h4>{{title}}</h4>
-                <p></p>
-            </div>
-        </div>
 
+        <div class="card">
+
+            <!-- Buttons -->
+            <div class="card-header">
+                <table border="0" style="width: 100%;">
+                    <tr>
+                        <td style="width: 59%;">
+                            <h4>{{title}}</h4>
+                        </td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 40%;" align="right">
+                            <button class="btn btn-primary" (click)="btnLockProjectClick()" id="btnLockProject">
+                                <i class="fa fa-lock fa-fw"></i> Lock
+                            </button>
+                            <button class="btn btn-primary" (click)="btnUnlockProjectClick()" id="btnUnlockProject">
+                                <i class="fa fa-unlock fa-fw"></i> Unlock
+                            </button>
+                            <button class="btn btn-primary" (click)="btnSaveProjectClick()" id="btnSaveProject">
+                                <i class="fa fa-save fa-fw"></i> Save
+                            </button>
+                            <button class="btn btn-danger" routerLink="/project">
+                                <i class="fa fa-close fa-fw"></i> Close
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Detail -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-right">Project Code</label>
+                            <div class="col-sm-9">
+                                <input [(ngModel)]="project.projectCode" type="text" class="form-control" placeholder="Project Code..." id="projectCode">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-right">Project</label>
+                            <div class="col-sm-9">
+                                <input [(ngModel)]="project.project" type="text" class="form-control" placeholder="Project..." id="projectName">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-right">Address</label>
+                            <div class="col-sm-9">
+                                <textarea [(ngModel)]="project.address" rows="5" class="form-control" placeholder="Address..." id="projectAddress"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-right">Status</label>
+                            <div class="col-sm-9">
+                                <wj-combo-box [itemsSource]="projectStatusData" [placeholder]="'Select Status'" [isEditable]="false" [isRequired]="true"
+                                    [displayMemberPath]="'description'" [selectedValuePath]="'value'" [(text)]="project.status"
+                                    style="width: 100%; ">
+                                </wj-combo-box>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
     </div>
 </div>

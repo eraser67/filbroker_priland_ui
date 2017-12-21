@@ -1,6 +1,6 @@
 export class ModelDropDown {
-    Id: number;
-    Category: string;
-    Description: string;
-    Value: string;
+    id: number;
+    category: string;
+    description: string;
+    value: string;
   }

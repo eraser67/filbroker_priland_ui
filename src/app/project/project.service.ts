@@ -8,10 +8,26 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 // Wijmo
 import { ObservableArray } from 'wijmo/wijmo';
+import { Observable } from 'rxjs/Observable';
 
+// Async
+import { Subject } from 'rxjs/Subject';
+
+// Model
+import { ModelProject } from '../model/model.project';
+import { ModelDropDown } from '../model/model.dropDown';
 
 @Injectable()
 export class ProjectService {
+
+    public projectSource = new Subject<ModelProject>();
+    public projectObservable = this.projectSource.asObservable();
+
+    public projectDeletedSource = new Subject<number>();
+    public projectDeletedObservable = this.projectDeletedSource.asObservable();
+
+    public projectStatusSource = new Subject<ObservableArray>();
+    public projectStatusObservable = this.projectStatusSource.asObservable();
 
     constructor(
         private router: Router,
@@ -53,5 +69,106 @@ export class ProjectService {
         return projectObservableArray;
     }
 
+    public addProject(project: Object, toastr: ToastsManager): void {
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Add";
+        this.http.post(url, JSON.stringify(project), this.options).subscribe(
+            response => {
+                var id = response.json();
+                if (id > 0) {
+                    this.toastr.success("Add successful.");
+                    setTimeout(() => {
+                        this.router.navigate(['/project', id]);
+                    }, 1000);
+                } else {
+                    this.toastr.error("Add failed.");
+                    (<HTMLButtonElement>document.getElementById("btnAddProject")).disabled = false;
+                    (<HTMLButtonElement>document.getElementById("btnAddProject")).innerHTML = "<i class='fa fa-plus fa-fw'></i> Add";
+                }
+            },
+            error => {
+                this.toastr.error("Server error.");
+            }
+        )
+    }
 
+    public getProject(id : number, toastr: ToastsManager) {
+        let project: ModelProject;
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Detail/" + id;
+
+        this.http.get(url, this.options).subscribe(
+            response => {
+                var results = response.json();
+                if (results != null) {
+                    project = {
+                        id: results.Id,
+                        projectCode: results.ProjectCode,
+                        project: results.Project,
+                        address: results.Address,
+                        status: results.Status,
+                        isLocked: results.IsLocked,
+                        createdBy: results.CreatedBy,
+                        createdDateTime: results.CreatedDateTime,
+                        updatedBy: results.UpdatedBy,
+                        updatedDateTime: results.UpdatedDateTime
+                    };
+                    this.projectSource.next(project);
+                } else {
+                    this.projectSource.next();
+                    this.toastr.error("No data.");
+                    setTimeout(() => {
+                        this.router.navigate(["/project"]);
+                    }, 1000);
+                }
+            }
+        );
+    }
+
+    public getProjectStatus(toastr: ToastsManager)  {
+        let projectStatuses  = new ObservableArray();
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/SysDropDown/List";
+
+        this.http.get(url, this.options).subscribe(
+            response => {
+                var results = new ObservableArray(response.json());
+                if (results.length > 0) {
+                    for (var i = 0; i <= results.length - 1; i++) {
+                        if (results[i].Category == "PROJECT STATUS") {
+                            projectStatuses.push({
+                                id: results[i].Id,
+                                category: results[i].Category,
+                                description: results[i].Description,
+                                value: results[i].Value
+                            });
+                        }
+                    }
+                    this.projectStatusSource.next(projectStatuses);
+                } else {
+                    this.toastr.error("No data.");   
+                }
+            }
+        );
+
+    }
+
+    public deleteProject(id : number) {
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Delete/" + id;
+        this.http.delete(url, this.options).subscribe(
+            response => {
+                this.projectDeletedSource.next(1);
+            },
+            error => {
+                this.projectDeletedSource.next(0);
+            }
+        )
+    }
+    
+    public getUnits(): ObservableArray {
+        let unitObservableArray = new ObservableArray();
+        return unitObservableArray;
+    }
+
+    public getHouseModels(): ObservableArray {
+        let houseModelObservableArray = new ObservableArray();
+        return houseModelObservableArray;
+    }
 }

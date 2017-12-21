@@ -18,26 +18,34 @@
         <!-- List -->
         <div class="card">
 
-            <!-- Filter/Add -->
+            <!-- Page Title -->
             <div class="card-header">
                 <table border="0" style="width: 100%;">
                     <tr>
                         <td style="width: 59%;">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-search fa-fw"></i>
-                                </span>
-                                <input type="text" class="form-control" placeholder="Filter" [(ngModel)]="filterProject" />
-                            </div>
+                            <h4>{{title}}</h4>
                         </td>
                         <td style="width: 1%;"></td>
                         <td style="width: 40%;" align="right">
-                            <button class="btn btn-primary" (click)="btnAddProjectClick()">
+                            <button class="btn btn-primary" (click)="btnAddProjectClick()" id="btnAddProject">
                                 <i class="fa fa-plus fa-fw"></i> Add
+                            </button>
+                            <button class="btn btn-danger" routerlink="/menu">
+                                <i class="fa fa-close fa-fw"></i> Close
                             </button>
                         </td>
                     </tr>
                 </table>
+            </div>
+
+            <!-- Filter/Add -->
+            <div class="card-header">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search fa-fw"></i>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Filter" [(ngModel)]="filterProject" />
+                </div>
             </div>
 
             <!-- Flexgrid List -->
@@ -53,8 +61,8 @@
                     </wj-flex-grid-column>
                     <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="90">
                         <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
-                            <button class="btn btn-danger btn-sm btn-block" (click)="btnDeleteProjectClick()" data-toggle="modal" data-backdrop="static"
-                                data-keyboard="false" data-target="#project-delete-confirmation-modal">
+                            <button class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-backdrop="static"
+                                data-keyboard="false" data-target="#projectDeleteModal">
                                 <i class="fa fa-trash fa-fw"></i> Delete
                             </button>
                         </ng-template>
@@ -94,6 +102,26 @@
 
         </div>
 
+    </div>
+</div>
+
+<!-- delete project -->
+<div class="modal fade" id="projectDeleteModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete</h4>
+            </div>
+            <div class="modal-body">
+                Delete Project?
+            </div>
+            <div class="modal-footer" align="right">
+                <button type="button" id="btnDeleteProject" class="btn btn-danger" (click)="btnDeleteProjectClick()">
+                    <i class="fa fa-trash fa-fw"></i> Delete</button>
+                <button type="button" id="btnDeleteCloseProject" class="btn btn-success" data-dismiss="modal">
+                    <i class="fa fa-close fa-fw"></i> Close</button>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -8,6 +8,8 @@ import { RouterModule, Routes } from '@angular/router';
 // Toastr
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ToastModule } from 'ng2-toastr/ng2-toastr';
+import { ToastOptions } from 'ng2-toastr';
+import { AppToastOptions } from './app.toast.options';
 
 // Wijmo
 import { WjGridModule } from 'wijmo/wijmo.angular2.grid';
@@ -97,7 +99,8 @@ const routes: Routes = [
   ],
   providers: [
     AccountService,
-    ProjectService
+    ProjectService,
+    {provide:ToastOptions, useClass:AppToastOptions}
   ],
   bootstrap: [AppComponent]
 })
