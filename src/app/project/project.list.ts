@@ -25,6 +25,8 @@ export class ProjectList {
     private currentDate = new Date();
     private currentDateString = [this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, this.currentDate.getDate()].join('-');
 
+    private projectDeletedSub : any;
+
     public project : ModelProject = {
         id: 0,
         projectCode: "NA",
@@ -80,7 +82,7 @@ export class ProjectList {
         let selectedProject = this.projectCollection.currentItem;
         this.projectService.deleteProject(selectedProject.id);
 
-        this.projectService.projectDeletedObservable.subscribe(
+        this.projectDeletedSub = this.projectService.projectDeletedObservable.subscribe(
             data => {
                 if(data == 1) {
                     this.toastr.success("Delete successful.");
@@ -97,4 +99,7 @@ export class ProjectList {
         );
     }
 
+    ngOnDestroy() {
+        if( this.projectDeletedSub != null) this.projectDeletedSub.unsubscribe();
+    }
 }

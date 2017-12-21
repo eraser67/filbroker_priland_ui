@@ -16,6 +16,7 @@ import { Subject } from 'rxjs/Subject';
 // Model
 import { ModelProject } from '../model/model.project';
 import { ModelDropDown } from '../model/model.dropDown';
+import { identifierName } from '@angular/compiler';
 
 @Injectable()
 export class ProjectService {
@@ -25,6 +26,15 @@ export class ProjectService {
 
     public projectDeletedSource = new Subject<number>();
     public projectDeletedObservable = this.projectDeletedSource.asObservable();
+
+    public projectSavedSource = new Subject<number>();
+    public projectSavedObservable = this.projectSavedSource.asObservable();   
+
+    public projectLockedSource = new Subject<number>();
+    public projectLockedObservable = this.projectLockedSource.asObservable();  
+
+    public projectUnlockedSource = new Subject<number>();
+    public projectUnlockedObservable = this.projectUnlockedSource.asObservable();  
 
     public projectStatusSource = new Subject<ObservableArray>();
     public projectStatusObservable = this.projectStatusSource.asObservable();
@@ -69,7 +79,7 @@ export class ProjectService {
         return projectObservableArray;
     }
 
-    public addProject(project: Object, toastr: ToastsManager): void {
+    public addProject(project: ModelProject, toastr: ToastsManager): void {
         let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Add";
         this.http.post(url, JSON.stringify(project), this.options).subscribe(
             response => {
@@ -87,6 +97,42 @@ export class ProjectService {
             },
             error => {
                 this.toastr.error("Server error.");
+            }
+        )
+    }
+
+    public saveProject(project: ModelProject): void {
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Save";
+        this.http.put(url, JSON.stringify(project), this.options).subscribe(
+            response => {
+                this.projectSavedSource.next(1);
+            },
+            error => {
+                this.projectSavedSource.next(0);
+            }
+        )
+    }
+
+    public lockProject(project: ModelProject): void {
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Lock";
+        this.http.put(url, JSON.stringify(project), this.options).subscribe(
+            response => {
+                this.projectLockedSource.next(1);
+            },
+            error => {
+                this.projectLockedSource.next(0);
+            }
+        )
+    }
+
+    public unlockProject(project: ModelProject): void {
+        let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Unlock";
+        this.http.put(url, JSON.stringify(project), this.options).subscribe(
+            response => {
+                this.projectUnlockedSource.next(1);
+            },
+            error => {
+                this.projectUnlockedSource.next(0);
             }
         )
     }
@@ -113,7 +159,6 @@ export class ProjectService {
                     };
                     this.projectSource.next(project);
                 } else {
-                    this.projectSource.next();
                     this.toastr.error("No data.");
                     setTimeout(() => {
                         this.router.navigate(["/project"]);
@@ -171,4 +216,5 @@ export class ProjectService {
         let houseModelObservableArray = new ObservableArray();
         return houseModelObservableArray;
     }
+
 }

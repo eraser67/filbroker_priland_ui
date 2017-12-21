@@ -29,13 +29,13 @@
                         </td>
                         <td style="width: 1%;"></td>
                         <td style="width: 40%;" align="right">
-                            <button class="btn btn-primary" (click)="btnLockProjectClick()" id="btnLockProject">
+                            <button [disabled]="project.isLocked" class="btn btn-primary" (click)="btnLockProjectClick()" id="btnLockProject">
                                 <i class="fa fa-lock fa-fw"></i> Lock
                             </button>
-                            <button class="btn btn-primary" (click)="btnUnlockProjectClick()" id="btnUnlockProject">
+                            <button [disabled]="!project.isLocked" class="btn btn-primary" (click)="btnUnlockProjectClick()" id="btnUnlockProject">
                                 <i class="fa fa-unlock fa-fw"></i> Unlock
                             </button>
-                            <button class="btn btn-primary" (click)="btnSaveProjectClick()" id="btnSaveProject">
+                            <button [disabled]="project.isLocked" class="btn btn-primary" (click)="btnSaveProjectClick()" id="btnSaveProject">
                                 <i class="fa fa-save fa-fw"></i> Save
                             </button>
                             <button class="btn btn-danger" routerLink="/project">
@@ -53,19 +53,19 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label text-right">Project Code</label>
                             <div class="col-sm-9">
-                                <input [(ngModel)]="project.projectCode" type="text" class="form-control" placeholder="Project Code..." id="projectCode">
+                                <input [disabled]="project.isLocked" [(ngModel)]="project.projectCode" type="text" class="form-control" placeholder="Project Code..." id="projectCode">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label text-right">Project</label>
                             <div class="col-sm-9">
-                                <input [(ngModel)]="project.project" type="text" class="form-control" placeholder="Project..." id="projectName">
+                                <input [disabled]="project.isLocked" [(ngModel)]="project.project" type="text" class="form-control" placeholder="Project..." id="projectName">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label text-right">Address</label>
                             <div class="col-sm-9">
-                                <textarea [(ngModel)]="project.address" rows="5" class="form-control" placeholder="Address..." id="projectAddress"></textarea>
+                                <textarea [disabled]="project.isLocked" [(ngModel)]="project.address" rows="5" class="form-control" placeholder="Address..." id="projectAddress"></textarea>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label text-right">Status</label>
                             <div class="col-sm-9">
-                                <wj-combo-box [itemsSource]="projectStatusData" [placeholder]="'Select Status'" [isEditable]="false" [isRequired]="true"
+                                <wj-combo-box [isDisabled]="project.isLocked" [itemsSource]="projectStatusData" [placeholder]="'Select Status'" [isEditable]="false" [isRequired]="true"
                                     [displayMemberPath]="'description'" [selectedValuePath]="'value'" [(text)]="project.status"
                                     style="width: 100%; ">
                                 </wj-combo-box>
