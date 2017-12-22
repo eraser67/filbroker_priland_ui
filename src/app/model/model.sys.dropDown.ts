@@ -1,4 +1,4 @@
-export class ModelDropDown {
+export class SysDropDown {
     id: number;
     category: string;
     description: string;

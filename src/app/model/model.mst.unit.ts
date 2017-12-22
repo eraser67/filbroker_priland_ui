@@ -1,4 +1,4 @@
-export class ModelUnit {
+export class MstUnit {
     id: number;
     unitCode: string;
     block: string;

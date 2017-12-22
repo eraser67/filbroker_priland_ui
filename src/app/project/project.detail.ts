@@ -12,7 +12,7 @@ import {ObservableArray, CollectionView} from 'wijmo/wijmo';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 // Model
-import { ModelProject } from '../model/model.project';
+import { MstProject } from '../model/model.mst.project';
 
 @Component({
   templateUrl: './project.detail.html'
@@ -29,7 +29,7 @@ export class ProjectDetail {
   private projectUnlockedSub : any;
   private projectStatusSub : any;
 
-  public project : ModelProject = {
+  public project : MstProject = {
     id: 0,
     projectCode: "",
     project: "",
@@ -53,7 +53,7 @@ export class ProjectDetail {
   }
 
   public ngOnInit() {
-    this.getProjectStatus();
+    this.getDropDowns();
     this.getProject();
   }
   
@@ -93,12 +93,27 @@ export class ProjectDetail {
       );
   }
 
-  public getProjectStatus() : void {
-    this.projectService.getProjectStatus(this.toastr);
+  public getDropDowns() : void {
+    this.projectService.getDropDowns(this.toastr);
 
-    this.projectStatusSub = this.projectService.projectStatusObservable.subscribe(
+    this.projectStatusSub = this.projectService.dropDownsObservable.subscribe(
       data => {
-        this.projectStatusData = data;
+        let projectStatuses = new ObservableArray();
+
+        if (data.length > 0) {
+          for (var i = 0; i <= data.length - 1; i++) {
+            if (data[i].category == "PROJECT STATUS") {
+              projectStatuses.push({
+                id: data[i].id,
+                category: data[i].category,
+                description: data[i].description,
+                value: data[i].value
+              });
+            }
+          }
+        }
+
+        this.projectStatusData = projectStatuses;
       }
     );
   }

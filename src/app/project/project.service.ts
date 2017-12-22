@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
+import { identifierName } from '@angular/compiler';
 
 // Message
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -14,14 +15,14 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 // Model
-import { ModelProject } from '../model/model.project';
-import { ModelDropDown } from '../model/model.dropDown';
-import { identifierName } from '@angular/compiler';
+import { MstProject } from '../model/model.mst.project';
+import { SysDropDown } from '../model/model.sys.dropDown';
+
 
 @Injectable()
 export class ProjectService {
 
-    public projectSource = new Subject<ModelProject>();
+    public projectSource = new Subject<MstProject>();
     public projectObservable = this.projectSource.asObservable();
 
     public projectDeletedSource = new Subject<number>();
@@ -36,8 +37,8 @@ export class ProjectService {
     public projectUnlockedSource = new Subject<number>();
     public projectUnlockedObservable = this.projectUnlockedSource.asObservable();  
 
-    public projectStatusSource = new Subject<ObservableArray>();
-    public projectStatusObservable = this.projectStatusSource.asObservable();
+    public dropDownsSource = new Subject<ObservableArray>();
+    public dropDownsObservable = this.dropDownsSource.asObservable();
 
     constructor(
         private router: Router,
@@ -79,7 +80,7 @@ export class ProjectService {
         return projectObservableArray;
     }
 
-    public addProject(project: ModelProject, toastr: ToastsManager): void {
+    public addProject(project: MstProject, toastr: ToastsManager): void {
         let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Add";
         this.http.post(url, JSON.stringify(project), this.options).subscribe(
             response => {
@@ -101,7 +102,7 @@ export class ProjectService {
         )
     }
 
-    public saveProject(project: ModelProject): void {
+    public saveProject(project: MstProject): void {
         let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Save";
         this.http.put(url, JSON.stringify(project), this.options).subscribe(
             response => {
@@ -113,7 +114,7 @@ export class ProjectService {
         )
     }
 
-    public lockProject(project: ModelProject): void {
+    public lockProject(project: MstProject): void {
         let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Lock";
         this.http.put(url, JSON.stringify(project), this.options).subscribe(
             response => {
@@ -125,7 +126,7 @@ export class ProjectService {
         )
     }
 
-    public unlockProject(project: ModelProject): void {
+    public unlockProject(project: MstProject): void {
         let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Unlock";
         this.http.put(url, JSON.stringify(project), this.options).subscribe(
             response => {
@@ -138,7 +139,7 @@ export class ProjectService {
     }
 
     public getProject(id : number, toastr: ToastsManager) {
-        let project: ModelProject;
+        let project: MstProject;
         let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/MstProject/Detail/" + id;
 
         this.http.get(url, this.options).subscribe(
@@ -168,8 +169,8 @@ export class ProjectService {
         );
     }
 
-    public getProjectStatus(toastr: ToastsManager)  {
-        let projectStatuses  = new ObservableArray();
+    public getDropDowns(toastr: ToastsManager)  {
+        let dropDowns  = new ObservableArray();
         let url = "http://filbrokerwebsite-priland.azurewebsites.net/api/SysDropDown/List";
 
         this.http.get(url, this.options).subscribe(
@@ -177,14 +178,14 @@ export class ProjectService {
                 var results = new ObservableArray(response.json());
                 if (results.length > 0) {
                     for (var i = 0; i <= results.length - 1; i++) {
-                        projectStatuses.push({
+                        dropDowns.push({
                             id: results[i].Id,
                             category: results[i].Category,
                             description: results[i].Description,
                             value: results[i].Value
                         });
                     }
-                    this.projectStatusSource.next(projectStatuses);
+                    this.dropDownsSource.next(dropDowns);
                 } else {
                     this.toastr.error("No data.");   
                 }

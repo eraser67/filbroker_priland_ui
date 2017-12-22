@@ -42,6 +42,14 @@ import { ReportsIndex } from './reports/reports.index';
 // My Services
 import { AccountService } from './account/account.service';
 import { ProjectService } from './project/project.service';
+import { BrokerService } from './broker/broker.service';
+import { ChecklistService } from './checklist/checklist.service';
+import { CommissionService } from './commission/commission.service';
+import { CustomerService } from './customer/customer.service';
+import { SettingsService } from './settings/settings.service';
+import { SoldUnitService } from './soldUnit/soldUnit.service';
+import { UnitService } from './unit/unit.service';
+import { UserService } from './user/user.service';
 
 const routes: Routes = [
   { path: '', component: HomeLanding },
@@ -100,7 +108,15 @@ const routes: Routes = [
   providers: [
     AccountService,
     ProjectService,
-    {provide:ToastOptions, useClass:AppToastOptions}
+    {provide:ToastOptions, useClass:AppToastOptions},
+    BrokerService,
+    ChecklistService,
+    CommissionService,
+    CustomerService,
+    SettingsService,
+    SoldUnitService,
+    UnitService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

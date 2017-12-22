@@ -12,7 +12,7 @@ import {ObservableArray, CollectionView} from 'wijmo/wijmo';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 // Model
-import { ModelProject } from '../model/model.project';
+import { MstProject } from '../model/model.mst.project';
 
 @Component({
   templateUrl: './project.list.html'
@@ -27,7 +27,7 @@ export class ProjectList {
 
     private projectDeletedSub : any;
 
-    public project : ModelProject = {
+    public project : MstProject = {
         id: 0,
         projectCode: "NA",
         project: "NA",

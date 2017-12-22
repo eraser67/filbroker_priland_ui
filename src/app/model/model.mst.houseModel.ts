@@ -1,4 +1,4 @@
-export class ModelHouseModel {
+export class MstHouseModel {
     Id: number;
     HouseModelCode: string;
     HouseModel: string;

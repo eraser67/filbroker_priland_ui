@@ -4,5 +4,5 @@ import { Router } from '@angular/router';
 
 
 @Injectable()
-export class CustomerService {
+export class UserService {
 }
