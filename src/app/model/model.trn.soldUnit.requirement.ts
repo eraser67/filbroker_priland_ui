@@ -2,6 +2,7 @@ export class TrnSoldUnitRequirement {
 	id: number;
 	soldUnitId: number;
 	checkListRequirementId: number;
+	checkListRequirement: string;
 	attachment1: string;
 	attachment2: string;
 	attachment3: string;

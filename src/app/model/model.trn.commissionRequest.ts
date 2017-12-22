@@ -3,13 +3,18 @@ export class TrnCommissionRequest {
 	commissionRequestNumber: string;
 	commissionRequestDate: string;
 	brokerId: number;
+	broker: string;
 	soldUnitId: number;
+	soldUnit: string;
 	commissionNumber: string;
 	amount: number;
 	remarks: string;
 	preparedBy: number;
+	preparedByUser: string;
 	checkedBy: number;
+	checkedByUser: string;
 	approvedBy: number;
+	approvedByUser: string;
 	status: string;
 	isLocked: boolean;
 	createdBy: number;

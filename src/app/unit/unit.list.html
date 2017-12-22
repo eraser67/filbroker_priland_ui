@@ -7,19 +7,123 @@
 <div class="content-wrapper">
     <div class="container-fluid">
         
+        <!-- Breadcrumbs -->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="/menu">Menu</a>
+                <a routerLink="/menu">Menu</a>
             </li>
             <li class="breadcrumb-item active">{{title}}</li>
         </ol>
 
-        <div class="row">
-            <div class="col-12">
-                <h4>{{title}}</h4>
-                <p></p>
+        <!-- List -->
+        <div class="card">
+
+            <!-- Page Title / Add -->
+            <div class="card-header">
+                <table border="0" style="width: 100%;">
+                    <tr>
+                        <td style="width: 59%;">
+                            <h4>{{title}}</h4>
+                        </td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 40%;" align="right">
+                            <button class="btn btn-primary" (click)="btnAddUnitClick()" id="btnAddUnit">
+                                <i class="fa fa-plus fa-fw"></i> Add
+                            </button>
+                            <button class="btn btn-danger" routerlink="/menu">
+                                <i class="fa fa-close fa-fw"></i> Close
+                            </button>
+                        </td>
+                    </tr>
+                </table>
             </div>
+
+            <!-- Filter -->
+            <div class="card-header">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-search fa-fw"></i>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Filter" [(ngModel)]="filterUnit" />
+                </div>
+            </div>
+
+            <!-- Flexgrid List -->
+            <div class="card-body">
+                <wj-flex-grid #unitFlexGrid [itemsSource]="unitCollection" [selectionMode]="3" [frozenColumns]="2">
+                    <wj-flex-grid-column [header]="Edit" [isReadOnly]="true" [isContentHtml]="true" [width]="90">
+                        <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <button class="btn btn-primary btn-sm btn-block" (click)="btnEditUnitClick()" data-toggle="modal" data-backdrop="static"
+                                data-keyboard="false">
+                                <i class="fa fa-edit fa-fw"></i> Edit
+                            </button>
+                        </ng-template>
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="Delete" [isReadOnly]="true" [width]="90">
+                        <ng-template wjFlexGridCellTemplate [cellType]="'Cell'" let-cell="cell">
+                            <button class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-backdrop="static"
+                                data-keyboard="false" data-target="#unitDeleteModal">
+                                <i class="fa fa-trash fa-fw"></i> Delete
+                            </button>
+                        </ng-template>
+                    </wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Code'" [binding]="'unitCode'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Block'" [binding]="'block'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Lot'" [binding]="'lot'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'House Model'" [binding]="'houseModel'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Floor Area'" [binding]="'tfa'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Lot Area'" [binding]="'tla'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'Price'" [binding]="'price'" [isReadOnly]="true" [width]="'*'"></wj-flex-grid-column>
+                    <wj-flex-grid-column [header]="'L'" [binding]="'isLocked'" [isReadOnly]="true" [width]="50"></wj-flex-grid-column>
+                </wj-flex-grid>
+            </div>
+
+            <!-- Navigation -->
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-sm-12 btn-group" id="">
+                        <button type="button" class="btn" (click)="unitCollection.moveToFirstPage()">
+                            <i class="fa fa-fast-backward"></i> First
+                        </button>
+                        <button type="button" class="btn" (click)="unitCollection.moveToPreviousPage()">
+                            <i class="fa fa-step-backward"></i> Previous
+                        </button>
+                        <button type="button" class="btn" disabled style="width:100px">
+                            {{ unitCollection.pageIndex + 1 }} / {{ unitCollection.pageCount }}
+                        </button>
+                        <button type="button" class="btn" (click)="unitCollection.moveToNextPage()">
+                            Next
+                            <i class="fa fa-step-forward"></i>
+                        </button>
+                        <button type="button" class="btn" (click)="unitCollection.moveToLastPage()">
+                            Last
+                            <i class="fa fa-fast-forward"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
+    </div>
+</div>
+
+<!-- Delete Unit -->
+<div class="modal fade" id="unitDeleteModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete</h4>
+            </div>
+            <div class="modal-body">
+                Delete Unit?
+            </div>
+            <div class="modal-footer" align="right">
+                <button type="button" id="btnDeleteUnit" class="btn btn-danger" (click)="btnDeleteUnitClick()">
+                    <i class="fa fa-trash fa-fw"></i> Delete</button>
+                <button type="button" id="btnDeleteCloseUnit" class="btn btn-success" data-dismiss="modal">
+                    <i class="fa fa-close fa-fw"></i> Close</button>
+            </div>
+        </div>
     </div>
 </div>

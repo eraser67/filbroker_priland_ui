@@ -4,6 +4,7 @@ export class MstChecklist {
 	checkList: string;
 	checkListDate: string;
 	projectId: string;
+	project: string;
 	remarks: string;
 	status: string;
 	isLocked: boolean;

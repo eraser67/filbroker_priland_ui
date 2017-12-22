@@ -1,13 +1,14 @@
 export class MstHouseModel {
-    Id: number;
-    HouseModelCode: string;
-    HouseModel: string;
-    ProjectId: number;
-    TFA: number;
-    Price: number;
-    IsLocked: boolean;
-    CreatedBy: number;
-    CreatedDateTime: string;
-    UpdatedBy: number;
-    UpdatedDateTime: string;
+    id: number;
+    houseModelCode: string;
+    houseModel: string;
+    projectId: number;
+    project: string
+    tfa: number;
+    price: number;
+    isLocked: boolean;
+    createdBy: number;
+    createdDateTime: string;
+    updatedBy: number;
+    updatedDateTime: string;
   }

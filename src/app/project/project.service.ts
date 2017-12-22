@@ -2,17 +2,16 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
-import { identifierName } from '@angular/compiler';
 
 // Message
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 // Wijmo
 import { ObservableArray } from 'wijmo/wijmo';
-import { Observable } from 'rxjs/Observable';
 
 // Async
 import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 // Model
 import { MstProject } from '../model/model.mst.project';

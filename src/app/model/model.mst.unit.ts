@@ -4,7 +4,9 @@ export class MstUnit {
     block: string;
     lot: string;
     projectId: number;
+    project: string;
     houseModelId: number;
+    houseModel: string;
     tla: number;
     tfa: number;
     price: number;
