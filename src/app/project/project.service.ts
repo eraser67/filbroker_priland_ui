@@ -177,14 +177,12 @@ export class ProjectService {
                 var results = new ObservableArray(response.json());
                 if (results.length > 0) {
                     for (var i = 0; i <= results.length - 1; i++) {
-                        if (results[i].Category == "PROJECT STATUS") {
-                            projectStatuses.push({
-                                id: results[i].Id,
-                                category: results[i].Category,
-                                description: results[i].Description,
-                                value: results[i].Value
-                            });
-                        }
+                        projectStatuses.push({
+                            id: results[i].Id,
+                            category: results[i].Category,
+                            description: results[i].Description,
+                            value: results[i].Value
+                        });
                     }
                     this.projectStatusSource.next(projectStatuses);
                 } else {
